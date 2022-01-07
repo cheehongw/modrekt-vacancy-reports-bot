@@ -13,6 +13,7 @@ def config(filename="db.ini", section="postgresql"):
 
     #parser.clear()
     return db
+    
 def sqlalchemy_engine_str(filename="db.ini", dialect="postgresql"):
     config_dict = config(filename=filename)
     config_dict['dialect'] = dialect
