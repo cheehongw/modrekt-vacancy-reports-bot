@@ -1,4 +1,4 @@
-Initial setup:
+# Initial setup:
 
 1. Clone this repo
 2. Create a `db.ini` file in the root of the project directory
@@ -19,3 +19,12 @@ user=postgres
 password=123456
 ````
 The port is 5432 by default.
+
+# Vacancy Reports Folder
+
+This folder contains all the vacancy reports from previous rounds.
+The naming convention is: `{year} Sem {semester} Round {round}.pdf`
+Example: `2020 Sem 2 Round 1.pdf`
+
+For the `year` variable, if the academic year is `AY19/20`, then year will be `2019`. 
+Always take the lower year in an academic year.
