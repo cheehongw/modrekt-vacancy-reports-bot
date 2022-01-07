@@ -20,6 +20,24 @@ password=123456
 ````
 The port is 5432 by default.
 
+To include other hosts, just add the same 5 lines with a different section header like so:
+
+```
+[postgresql]
+host=<specify host url here>
+database=<specify db name>
+user=<specify user account>
+password=<your password>
+
+[hostnumber2]
+host=<specify host url here>
+database=<specify db name>
+user=<specify user account>
+password=<your password>
+```
+
+
+
 # Vacancy Reports Folder
 
 This folder contains all the vacancy reports from previous rounds.

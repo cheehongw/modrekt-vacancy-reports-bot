@@ -1,6 +1,8 @@
 from configparser import ConfigParser
 
-def config(filename="db.ini", section="postgresql"):
+section_to_use = "elephantsql" #change this accordingly
+
+def config(filename="db.ini", section=section_to_use):
     parser = ConfigParser()
     parser.read(filename)
     db = {}
@@ -15,7 +17,7 @@ def config(filename="db.ini", section="postgresql"):
     return db
     
 def sqlalchemy_engine_str(filename="db.ini", dialect="postgresql"):
-    config_dict = config(filename=filename)
+    config_dict = config(filename=filename, section=section_to_use)
     config_dict['dialect'] = dialect
     
     output = '{dialect}://{user}:{password}@{host}:5432/{database}'.format(**config_dict)
