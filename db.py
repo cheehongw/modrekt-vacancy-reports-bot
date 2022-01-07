@@ -36,6 +36,7 @@ def insert_vacancy_reports(table_name='raw', hard_reset=False):
     cursor.execute(q)
 
 
+
 #---------testing purposes--------
 
 #insert_vacancy_reports(table_name='test', hard_reset=True)
