@@ -1,8 +1,12 @@
-import telebot, sql_queries
+import telebot, sql_queries, os, dotenv
+from flask import Flask, request
 from config import config
 
 def main():
-    bot_dict = config("db.ini", "telebot")
+    dotenv.load_dotenv()
+    server = Flask(__name__)
+
+    bot_dict = config("db.ini", "telebot_personal")
     bot = telebot.TeleBot(bot_dict['token'], parse_mode=bot_dict['parse_mode'])
 
     @bot.message_handler(commands=['start', 'help'])
@@ -34,7 +38,20 @@ module_code number_of_rounds""")
 
         bot.reply_to(message, return_msg)
 
-    bot.infinity_polling()
+    @server.route('/' + bot_dict['token'], methods=['POST'])
+    def getMessage():
+        json_string = request.get_data().decode('utf-8')
+        update = telebot.types.Update.de_json(json_string)
+        bot.process_new_updates([update])
+        return "!", 200
+
+    @server.route("/")
+    def webhook():
+        bot.remove_webhook()
+        bot.set_webhook(url='https://modrekt-vacancies-bot.herokuapp.com/'+bot_dict['token'])
+        return "!", 200
+    
+    server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
 
 if __name__ == "__main__":
     main()
