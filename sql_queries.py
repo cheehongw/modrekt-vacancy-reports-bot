@@ -47,7 +47,6 @@ def past_year_but_same_round_vacancy(mod_code, round, how_far_back=1, options=['
    return cursor.fetchall()
 
 def reply_message(*args):
-   print(args)
    year = args[2]
    semester = args[3]
    round = args[4]
@@ -65,10 +64,11 @@ def handle_message(mod_code, rounds=1):
    xs = latest_round_vacancy(mod_code, rounds)
    message = "Here are the vacancies for {0}:\n".format(mod_code)
 
+   if len(xs) == 0:
+      message = "No module information found for {0}\nAre you sure it is a valid mod code?".format(mod_code)
    for tup in xs:
       tup_str = reply_message(*tup)
       message = message + tup_str
    
    return message
       
-print(handle_message('ACC1701X', 3))
