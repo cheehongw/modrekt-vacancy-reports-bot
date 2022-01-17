@@ -6,7 +6,11 @@ def main():
     dotenv.load_dotenv()
     server = Flask(__name__)
 
-    bot_dict = config("db.ini", "telebot_personal")
+    #specify which bot you want to use here: currently set to `telebot`
+    bot_dict = config("db.ini", "telebot")
+    #specify which webhook url you want to use here: currently set to `webhook_url`
+    webhook_url = config("db.ini", "webhook_url")
+
     bot = telebot.TeleBot(bot_dict['token'], parse_mode=bot_dict['parse_mode'])
 
     @bot.message_handler(commands=['start', 'help'])
@@ -48,7 +52,7 @@ module_code number_of_rounds""")
     @server.route("/")
     def webhook():
         bot.remove_webhook()
-        bot.set_webhook(url='https://modrekt-vacancies-bot.herokuapp.com/'+bot_dict['token'])
+        bot.set_webhook(url=webhook_url['webhook_url'] +bot_dict['token'])
         return "!", 200
     
     server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))

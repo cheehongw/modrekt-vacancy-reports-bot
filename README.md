@@ -1,48 +1,29 @@
 # Initial setup:
 
 1. Clone this repo
-2. Create a `db.ini` file in the root of the project directory
-3. Inside the file, include the following sections with key-value pairs:
-```
-[postgresql]
-host=<specify host url here>
-database=<specify db name>
-user=<specify user account>
-password=<your password>
-
-[telebot]
-token=<your token>
-parse_mode=None
-```
-example:
-```
-[postgresql]
-host=localhost
-database=master
-user=postgres
-password=123456
-
-[telebot]
-token=abcdgaksf:23641273uehwbdeh
-parse_mode=None
-````
-The database port is 5432 by default.
-
-To include other database hosts, just add the same 5 lines with a different section header like so:
+2. Create a `.env` file in the root of the project directory
+3. For each default section seen in the `db.ini` file, there are placeholders for certain key-value pairs. Example from the current `db.ini` file:
 
 ```
-[postgresql]
-host=<specify host url here>
-database=<specify db name>
-user=<specify user account>
-password=<your password>
-
-[hostnumber2]
-host=<specify host url here>
-database=<specify db name>
-user=<specify user account>
-password=<your password>
+[elephantsql]  #default
+host=satao.db.elephantsql.com
+database=${ELEPHANTUSER}
+user=${ELEPHANTUSER}
+password=${ELEPHANTSQL}
 ```
+The values `${ELEPHANTUSER}` and `${ELEPHANTSQL}` are placeholders for username and password to access the elephantDB. These secret values are stored as key-value pairs in the `.env` file, or as `config vars` in heroku deployment:
+
+```
+#elephantsql
+ELEPHANTSQL=hunter2
+ELEPHANTUSER=admin
+```
+
+Otherwise, you can directly replace these placeholder values in the `db.ini` with the corresponding secret, but you will have to include `db.ini` in your `.gitignore` file.
+
+There are 3 default sections in the `db.ini` file. They are default sections because these sections are used in line #10 and #12 of `main.py` and line #4 of `config.py`. You can specify alternative sections to use by changing the values at said lines.
+
+The `[postgresql]` and `[telebot_public]` sections in the repo's `db.ini` file are examples of alternative sections.
 
 # Vacancy Reports Folder
 
